@@ -1,24 +1,5 @@
-# README
+*Sovellus on tehty osana Helsingin yliopioston tietojenkäsittelytieteen kurssia TKT21003 Web-palvelinohjelmointi Ruby on Rails*
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Rate beer -sovellus
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Sovellus löytyy [Herokusta](https://still-sea-33833.herokuapp.com/breweries)
