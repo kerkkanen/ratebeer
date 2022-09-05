@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+
+<div>
+  <h3>
+    <%= link_to "List of all breweries", breweries_path %>
+  </h3>
+</div>
+
+
+<h1>Beers</h1>
+
+<div id="beers">
+  <% @beers.each do |beer| %>
+    <%= render beer %>
+  <% end %>
+</div>
+
+<%= link_to "New beer", new_beer_path %>
