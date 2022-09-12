@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<%= link_to "Add new rating", new_rating_path %>
+
+<h1>List of ratings</h1>
+
+<p>Number of ratings: <%= @ratings.count %><p>
+
+<div id="ratings">
+  <ul>
+    <% @ratings.each do |rating| %>
+      
+      <li><%= render rating %> <%= button_to 'Delete', rating, method: :delete, form: { data: { 'turbo-confirm': 'Are you sure?' } } %> </li>
+    <% end %>
+    </div>
+  </ul>
+</div>
+  
+
+

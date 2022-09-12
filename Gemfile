@@ -17,6 +17,10 @@ group :production do
    gem 'pg'
 end
 
+group :development, :test do
+  gem 'pry-byebug'
+end
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 

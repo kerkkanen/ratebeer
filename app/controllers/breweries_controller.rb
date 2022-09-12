@@ -1,9 +1,11 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: %i[ show edit update destroy ]
+  before_action :authenticate, only: [:destroy]
 
   # GET /breweries or /breweries.json
   def index
     @breweries = Brewery.all
+    #@ratings = Rating.where(brewery_id: self.brewery)
   end
 
   # GET /breweries/1 or /breweries/1.json
@@ -67,4 +69,13 @@ class BreweriesController < ApplicationController
     def brewery_params
       params.require(:brewery).permit(:name, :year)
     end
+
+    def authenticate
+      admin_accounts = {"sisseli" => "kaliaa", "maussi" => "enemman_kaliaa", "miuku" => "komputsaaa"}
+      authenticate_or_request_with_http_basic do |username, password|
+        raise "Wrong username or password" unless admin_accounts[username.downcase] == password.downcase
+
+        return true
+    end
+  end  
 end
