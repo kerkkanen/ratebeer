@@ -23,9 +23,7 @@ class RatingsController < ApplicationController
 
   def destroy
     rating = Rating.find(params[:id])
-    rating.delete if current_user == rating.user
-    orphan = Rating.all.select{|rating| rating.user.nil? || rating.beer.nil?}
-    orphan.each{|rating| rating.destroy}
+    rating.destroy if current_user == rating.user
     redirect_to ratings_path
   end
 end

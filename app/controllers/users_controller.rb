@@ -50,7 +50,7 @@ class UsersController < ApplicationController
   # DELETE /users/1 or /users/1.json
   def destroy
     user = User.find(params[:id])
-    user.delete if current_user == user
+    user.destroy if current_user == user
     session.destroy
     redirect_to users_path
   end
