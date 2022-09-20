@@ -4,6 +4,9 @@ class Brewery < ApplicationRecord
   has_many :beers, dependent: :destroy
   has_many :ratings, through: :beers
 
+  validates :name, presence: true
+  validate  :year_between_1040_and_now
+
   def print_report
     puts name
     puts "established at year #{year}"
@@ -15,5 +18,9 @@ class Brewery < ApplicationRecord
     puts "changed year to #{year}"
   end
 
-end
+  def year_between_1040_and_now
+    return if year > 1040 && year <= Time.now.year
 
+    errors.add(:year, "is invalid: must be between 1040 and current year")
+  end
+end
