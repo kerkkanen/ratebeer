@@ -3,6 +3,8 @@
 <%= render @user %>
 
 <p>Has made <%= @user.ratings.count %> <%= 'rating'.pluralize(@user.ratings.count) %>, average rating <%= @user.average_rating %> </p>
+<p>Favorite style beer:  <%= @user.favorite_style %></p>
+<p>Favorite brewery:  <%= @user.favorite_brewery %></p>
 
 <p><strong>Beer club memberships:</strong></p>
 
