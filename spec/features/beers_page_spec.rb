@@ -4,6 +4,8 @@ require 'rails_helper'
 describe "Beer" do
     before :each do
         FactoryBot.create :brewery
+        FactoryBot.create :user
+        sign_in(username: "Pekka", password: "Foobar1")
         visit new_beer_path
     end
 
