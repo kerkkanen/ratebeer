@@ -35,10 +35,9 @@ jobs:
           bundler-cache: true
       - name: Run tests
         run: bundle exec rspec
-        
-lint:
-   runs-on: ubuntu-22.04
-   steps:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
      - name: Checkout code
        uses: actions/checkout@v3
      - name: Install Ruby and gems
