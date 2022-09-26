@@ -55,9 +55,9 @@ describe "Rating" do
 
     it "creates user's favorite brewery and beer style correct in own page" do
       brewery_x = FactoryBot.create(:brewery, name: "Olvi") 
-      beer_x = FactoryBot.create(:beer, style: "porter", brewery_id: 2)
-      rating1 = FactoryBot.create(:rating, score: 20, beer: beer1, user: user)
-      rating2 = FactoryBot.create(:rating, score: 30, beer: beer_x, user: user)
+      beer_x = FactoryBot.create(:beer, style: "porter", brewery_id: brewery_x.id)
+      FactoryBot.create(:rating, score: 20, beer: beer1, user: user)
+      FactoryBot.create(:rating, score: 30, beer: beer_x, user: user)
       visit user_path(user)
 
       expect(page).to have_content("#{user.favorite_style}")
