@@ -206,7 +206,7 @@
           1,
           null,
           1,
-          111,
+          117,
           null,
           89,
           null,
@@ -329,7 +329,6 @@
           1,
           null,
           null,
-          null,
           1,
           1,
           null,
@@ -411,7 +410,6 @@
           1,
           null,
           null,
-          null,
           1,
           3,
           null,
@@ -481,6 +479,60 @@
           null
         ]
       },
+      "/home/katjaker/ratebeer/lib/beermapping_api.rb": {
+        "lines": [
+          1,
+          1,
+          5,
+          10,
+          null,
+          null,
+          1,
+          5,
+          null,
+          5,
+          5,
+          null,
+          5,
+          null,
+          4,
+          4,
+          5,
+          null,
+          null,
+          null,
+          1,
+          5,
+          null,
+          null
+        ]
+      },
+      "/home/katjaker/ratebeer/app/models/place.rb": {
+        "lines": [
+          1,
+          1,
+          5,
+          null,
+          null
+        ]
+      },
+      "/home/katjaker/ratebeer/app/controllers/places_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          1,
+          3,
+          3,
+          1,
+          null,
+          2,
+          null,
+          null,
+          null
+        ]
+      },
       "/home/katjaker/ratebeer/app/controllers/ratings_controller.rb": {
         "lines": [
           1,
@@ -541,7 +593,6 @@
           0,
           0,
           0,
-          null,
           null,
           null,
           0,
@@ -726,6 +777,6 @@
         }
       }
     },
-    "timestamp": 1664182255
+    "timestamp": 1664446679
   }
 }
