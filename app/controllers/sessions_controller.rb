@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
   end
 
   def create
+    session[:search_city] = nil
     user = User.find_by username: params[:username]
     # tarkastetaan että käyttäjä olemassa, ja että salasana on oikea
     if user&.authenticate(params[:password])
