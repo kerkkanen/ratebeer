@@ -19,7 +19,7 @@ class Brewery < ApplicationRecord
   end
 
   def year_between_1040_and_now
-    return if year > 1040 && year <= Time.now.year
+    return if year != nil && year > 1040 && year <= Time.now.year
 
     errors.add(:year, "is invalid: must be between 1040 and current year")
   end

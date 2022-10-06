@@ -14,9 +14,10 @@ class PlacesController < ApplicationController
 
   def show
     searched = Rails.cache.read session[:search_city]
-    puts "moi"
-    puts params[:id]
-    puts "moi"
+    @place = nil
+    searched.each do |s|
+      @place = s if s.id == params[:id]
+    end
     @place
   end
 end

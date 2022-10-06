@@ -1,0 +1,24 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>List of styles</h1>
+
+<div id="styles">
+  
+    <% @styles.each do |style| %>
+    <ul>
+    <h4><%= style.name %></h4>
+      <% @beers.each do |beer| %>
+        <% if beer.style_id == style.id %>
+          <li><%=link_to beer.name, beer %></li>
+        <% end%>
+      <% end %>
+    </ul>
+    <% end %>
+    </div>
+  
+</div>
+
+<%= link_to('New Style', new_style_path) if current_user %>
+  
+
+
