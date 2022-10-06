@@ -1,0 +1,24 @@
+<div id="<%= dom_id style %>">
+  <p>
+    <strong>Name:</strong>
+    <%= style.name %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= style.description %>
+  </p>
+  
+  
+   <p>
+    <strong>Beers:</strong>
+  </p>
+  <ul>
+  <% @beers.each do |beer| %>
+    <% if beer.style_id == style.id%>
+      <li><p><%= link_to beer.name, beer %></li>
+    <% end %>
+  <% end %>
+</ul>
+
+</div>

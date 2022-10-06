@@ -1,24 +1,14 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>List of styles</h1>
+<h1>Styles</h1>
 
 <div id="styles">
-  
-    <% @styles.each do |style| %>
-    <ul>
-    <h4><%= style.name %></h4>
-      <% @beers.each do |beer| %>
-        <% if beer.style_id == style.id %>
-          <li><%=link_to beer.name, beer %></li>
-        <% end%>
-      <% end %>
-    </ul>
-    <% end %>
-    </div>
-  
+  <% @styles.each do |style| %>
+    <div id="<%= dom_id style %>">
+    <p>
+      <%= link_to style.name, style %>
+    </p>
+  <% end %>
 </div>
 
-<%= link_to('New Style', new_style_path) if current_user %>
-  
-
-
+<%= link_to "New style", new_style_path %>

@@ -31,10 +31,6 @@ class BeersController < ApplicationController
   # POST /beers or /beers.json
   def create
     @beer = Beer.new(beer_params)
-    
-    puts "moi"
-    puts beer_params
-    puts "moi"
 
     respond_to do |format|
       if @beer.save
