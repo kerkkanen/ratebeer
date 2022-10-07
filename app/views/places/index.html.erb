@@ -8,6 +8,11 @@
 <% end %>
 
 <% if @places %>
+  <p><strong>The current weather in <%= session[:search_city] %></strong></p>
+  <p><%= @weather["temperature"]%> Celsius</p>
+  <img src=<%=@weather["weather_icons"][0]%>>
+  <p><strong>wind</strong> <%= @weather["wind_speed"]%>, direction: <%=@weather["wind_dir"]%></p>
+
   <table>
  <thead>
    <th>id</th>

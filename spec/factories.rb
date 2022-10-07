@@ -12,7 +12,7 @@ FactoryBot.define do
 
   factory :beer do
     name { "anonymous" }
-    style { "Lager" }
+    style_id { 1 }
     brewery # olueeseen liittyvä panimo luodaan brewery-tehtaalla
   end
 
