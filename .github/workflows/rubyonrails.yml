@@ -22,10 +22,13 @@ jobs:
           POSTGRES_DB: rails_test
           POSTGRES_USER: rails
           POSTGRES_PASSWORD: password
+          BEEMAPPING_APIKEY: ENV[BEERMAPPING_APIKEY]
+          WEATHER_APIKEY: ENV[WEATHER_APIKEY]
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
       BEEMAPPING_APIKEY: ENV[BEERMAPPING_APIKEY]
+      WEATHER_APIKEY: ENV[WEATHER_APIKEY]
 
     steps:
       - name: Checkout code
