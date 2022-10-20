@@ -11,12 +11,11 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :beer_club_id, style: "display: block" %>
-    <%= form.select :beer_club_id, options_from_collection_for_select(@beer_clubs, :id, :name) %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+    <form>
+    <div class="mb-3">
+      <label class="form-label">Beer club</label>
+      <select <%= form.collection_select :beer_club_id, @beer_clubs, :id, :name %>
+    </div>
+    <button class="btn btn-primary", type=<%= form.submit %>Join Beer club</button>
+  </form>
 <% end %>

@@ -11,17 +11,19 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :year, style: "display: block" %>
-    <%= form.number_field :year %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+  <form>
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input type="text" class="form-control" id=<%= form.text_field :name %>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Year</label>
+      <input type="numeral" class="form-control" id=<%= form.number_field :year %>
+    </div>
+    <div>
+      <%= form.label :active, style: "display: block" %>
+      <%= form.check_box :active %>
+    </div>
+    <button class="btn btn-primary", type=<%= form.submit %>Submit</button>
+  </form>
 <% end %>

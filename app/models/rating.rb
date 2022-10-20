@@ -6,6 +6,10 @@ class Rating < ApplicationRecord
                                     only_integer: true }
 
   def to_s
-    "#{beer.name} #{score}"
+    "#{beer.name}, scores: #{score}"
+  end
+
+  def self.latest(n)
+    sorted_by_time_in_desc_order = Rating.all.sort.last(n)
   end
 end

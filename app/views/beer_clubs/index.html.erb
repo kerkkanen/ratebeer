@@ -1,15 +1,18 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Beer clubs</h1>
 
-<div id="beer_clubs">
-  <% @beer_clubs.each do |beer_club| %>
-  <div id="<%= dom_id beer_club %>">
-    <p>
-      <%= link_to beer_club.name, beer_club %>, <%= beer_club.city%>
-    </p>
-  </div>
-  <% end %>
-</div>
+<table class="table table-striped">
+ <thead>
+   <th>Name</th>
+   <th>City</th>
+   <th>Members</th>
+ </thead>
+ <% @beer_clubs.each do |club| %>
+   <tr>
+     <td><%= link_to club.name, club %></td>
+     <td><%= club.city %></td>
+     <td><%= club.users.count() %></td>    
+   </tr>
+ <% end %>
+</table>
 
-<%= link_to('New Beer club', new_beer_club_path) if current_user %>
+<%= link_to('New Beer club', new_beer_club_path, class:'btn btn-primary') if current_user %>

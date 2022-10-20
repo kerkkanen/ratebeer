@@ -9,7 +9,6 @@ describe "Places" do
     visit places_path
     fill_in('city', with: 'kumpula')
     click_button "Search"
-    save_and_open_page
 
     expect(page).to have_content "Oljenkorsi"
   end

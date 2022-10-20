@@ -61,4 +61,8 @@ class User < ApplicationRecord
     end
     brews.invert.max&.last&.name
   end
+
+  def self.active(n)
+    User.all.sort_by{|u| u.ratings.count}.reverse.first(n)
+  end
 end

@@ -7,6 +7,9 @@ class Brewery < ApplicationRecord
   validates :name, presence: true
   validate  :year_between_1040_and_now
 
+  scope :active, -> { where active: true }
+  scope :retired, -> { where active: [nil,false] }
+
   def print_report
     puts name
     puts "established at year #{year}"
@@ -23,4 +26,12 @@ class Brewery < ApplicationRecord
 
     errors.add(:year, "is invalid: must be between 1040 and current year")
   end
+
+  def to_s
+    "#{self.name}"
+  end
+
+  def self.top(n)
+   sorted_by_rating_in_desc_order = Brewery.all.sort{|b| b.average_rating}.reverse.first(n)
+ end
 end

@@ -11,6 +11,9 @@ class SessionsController < ApplicationController
     # tarkastetaan että käyttäjä olemassa, ja että salasana on oikea
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
+      if user.admin
+        session[:admin] = true
+      end
       redirect_to user_path(user), notice: "Welcome back!"
     else
       redirect_to signin_path, notice: "Username and/or password mismatch"
@@ -19,6 +22,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    session[:admin] = nil
     redirect_to signin_path
   end
 end

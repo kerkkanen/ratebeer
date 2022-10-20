@@ -1,6 +1,5 @@
 <h2>Create new rating</h2>
 
-<div>
 <%= form_for(@rating) do |f| %>
     <% if @rating.errors.any? %>
     <div id="error_explanation">
@@ -13,8 +12,15 @@
       </ul>
     </div>
   <% end %>
-  <%= f.select :beer_id, options_from_collection_for_select(@beers, :id, :to_s), selected: @rating.beer_id %>
-  score: <%= f.number_field :score %>
-<%= f.submit %>
+  <form>
+    <div class="mb-3">
+      <label class="form-label">Beer</label>
+      <select <%= f.collection_select :beer_id, @beers, :id, :name, selected: @rating.beer_id %>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Score</label>
+       <%= f.number_field :score %>
+    </div>
+    <button class="btn btn-primary", type=<%= f.submit %>Create Rating</button>
+  </form>
 <% end %>
-</div>

@@ -1,14 +1,10 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Styles</h1>
 
-<div id="styles">
-  <% @styles.each do |style| %>
-    <div id="<%= dom_id style %>">
-    <p>
-      <%= link_to style.name, style %>
-    </p>
-  <% end %>
+<div>
+<% @styles.each do |style| %>
+  <h3><%= link_to style.name, style %></h3>
+  <p><%= style.description %></p>
+<% end %>
 </div>
 
-<%= link_to "New style", new_style_path %>
+<%= link_to "New style", new_style_path, class:'btn btn-primary' %>

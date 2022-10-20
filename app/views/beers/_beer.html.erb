@@ -6,7 +6,7 @@
 
   <p>
     <strong>Style:</strong>
-    <%= beer.style %>
+    <%= link_to beer.style.name, beer.style %>
   </p>
 
   <p>
@@ -18,7 +18,7 @@
     <% if beer.ratings.empty? %>
       Beer has not been rated yet!
     <% else %>
-      Beer has <%= beer.ratings.count %> <%= 'rating'.pluralize(beer.ratings.count) %>  with an average of <%= beer.average_rating %>
+      Beer has <%= beer.ratings.count %> <%= 'rating'.pluralize(beer.ratings.count) %>  with an average of <%= round(beer.average_rating) %>
 
     <% end %>
   </p>

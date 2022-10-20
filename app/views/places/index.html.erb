@@ -1,19 +1,17 @@
 <h1>Beer places search</h1>
 
-<p id="notice"><%= notice %></p>
-
 <%= form_with url: places_path, method: :post do |form| %>
-  city <%= form.text_field :city %>
-  <%= form.submit "Search" %>
+  <p>city <%= form.text_field :city %>
+  <%= form.submit "Search" %></p>
 <% end %>
 
 <% if @places %>
   <p><strong>The current weather in <%= session[:search_city] %></strong></p>
   <p><%= @weather["temperature"]%> Celsius</p>
-  <img src=<%=@weather["weather_icons"][0]%>>
+  <p><img src=<%=@weather["weather_icons"][0]%>></p>
   <p><strong>wind</strong> <%= @weather["wind_speed"]%>, direction: <%=@weather["wind_dir"]%></p>
 
-  <table>
+  <table class="table table-hover">
  <thead>
    <th>id</th>
    <th>name</th>

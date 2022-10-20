@@ -3,7 +3,18 @@
 <h1>Sign in</h1>
 
 <%= form_with url: session_path, method: :post do |form| %>
-  Username <%= form.text_field :username %>
-  Password <%= form.password_field :password%>
-  <%= form.submit "Log in" %>
+  <form>
+  <div class="mb-3">
+   <label class="form-label">Username</label>
+   <input type="string" class="form-control" id=<%= form.text_field :username %>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Password</label>
+    <input type="password" class="form-control" id=<%= form.password_field :password %>
+  </div>
+  <button class="btn btn-primary", type=<%= form.submit %>Log in</button>
+  </form>
 <% end %>
+
+
+ 

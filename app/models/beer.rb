@@ -11,4 +11,8 @@ class Beer < ApplicationRecord
   def to_s
     "#{name} (#{brewery.name})"
   end
+
+  def self.top(n)
+    sorted_by_rating_in_desc_order = Beer.all.sort_by(&:average_rating).reverse.first(n)
+  end
 end

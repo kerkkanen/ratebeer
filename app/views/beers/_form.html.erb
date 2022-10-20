@@ -10,23 +10,20 @@
       </ul>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :style_id, style: "display: block" %>
-    <%= form.select :style_id, options_from_collection_for_select(@styles, :id, :name) %>
-  </div>
-
-  <div>
-    <%= form.label :brewery_id, style: "display: block" %>
-    <%= form.select :brewery_id, options_from_collection_for_select(@breweries, :id, :name) %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+  <form>
+    <div class="mb-3">
+      <label class="form-label">Name</label>
+      <input type="text" class="form-control" id=<%= form.text_field :name %>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Style</label>
+      <select <%= form.collection_select :style_id, @styles, :id, :name %>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Brewery</label>
+      <select <%= form.collection_select :brewery_id, @breweries, :id, :name %>
+    </div>
+    <button class="btn btn-primary", type=<%= form.submit %>Submit</button>
+  </form>
 <% end %>
+
