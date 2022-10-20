@@ -1,24 +1,14 @@
 <h1>Users</h1>
 
-  <table class="table table-divider">
- <thead>
-   <th>Name</th>
-   <th>Ratings</th>
-   <th>Beer clubs</th>
- </thead>
- <% @users.each do |user| %>
-   <tr>
-    <td><%= link_to user.username, user %></td>
-    <td><%= user.ratings.count() %></td>
-    <% if user.memberships.empty?%>
-      <td>No memberships</td> 
-    <% else %>
-      <% user.memberships.each do |club| %>
-        <td><%= link_to club.beer_club.name, club.beer_club %></td>
-       <% end %>
-    <% end %>     
-   </tr>
- <% end %>
-</table>
+<% @users.each do |user| %>
+  <h3>Username: <%= user.username %></h3>
+  <% if not user.active %>
+    <span class="badge bg-danger">closed</span>
+  <% end %>
+  <p>Has made <%=user.ratings.count %> <%= 'rating'.pluralize(user.ratings.count) %>, average rating <%= round(user.average_rating) %> </p>
+  <p>Favorite style:  <%= user.favorite_style %></p>
+  <p>Favorite brewery:  <%= user.favorite_brewery %></p>
+  <p><%= link_to "Show this user", user%> </p>
+<% end %>
 
 <%= link_to "New user", new_user_path, class:'btn btn-primary' %>

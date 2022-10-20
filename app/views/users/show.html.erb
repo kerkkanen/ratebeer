@@ -1,8 +1,20 @@
 <%= render @user %>
 
-<p>Has made <%= @user.ratings.count %> <%= 'rating'.pluralize(@user.ratings.count) %>, average rating <%= @user.average_rating %> </p>
+<% if not @user.active %>
+  <span class="badge bg-danger">closed</span>
+<% end %>
+
+<p>Has made <%= @user.ratings.count %> <%= 'rating'.pluralize(@user.ratings.count) %>, average rating <%= round(@user.average_rating) %> </p>
 <p>Favorite style beer:  <%= @user.favorite_style %></p>
 <p>Favorite brewery:  <%= @user.favorite_brewery %></p>
+
+<% if admin %>
+  <% if @user.active%>
+    <p><%= button_to "Close account ", toggle_activity_user_path(@user.id), data: {turbo_method: "post"}, class: "btn btn-danger" %></p>
+  <% else %>
+    <p><%= button_to "Open account", toggle_activity_user_path(@user.id), data: {turbo_method: "post"}, class: "btn btn-primary" %></p>
+  <% end %>
+<% end%>
 
 <p><strong>Beer club memberships:</strong></p>
 
@@ -20,7 +32,7 @@
   <% @user.ratings.each do |rating| %>
     <li><%= "#{rating.to_s}" %>
       <% if @user == current_user %>
-        <%= link_to "Delete", rating, method: :delete %>
+        <%= button_to 'delete', rating, method: :delete, form: { style: 'display:inline-block;',  data: { 'turbo-confirm': 'Are you sure?' }} %>
       <% end %>
     </li>
   <% end %>

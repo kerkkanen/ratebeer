@@ -59,6 +59,15 @@ class BreweriesController < ApplicationController
     end
   end
 
+  def toggle_activity
+    brewery = Brewery.find(params[:id])
+    brewery.update_attribute :active, (not brewery.active)
+  
+    new_status = brewery.active? ? "active" : "retired"
+  
+    redirect_to brewery, notice:"brewery activity status changed to #{new_status}"
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -69,14 +78,5 @@ class BreweriesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def brewery_params
     params.require(:brewery).permit(:name, :year, :active)
-  end
-
-  def toggle_activity
-    brewery = Brewery.find(params[:id])
-    brewery.update_attribute :active, (! brewery.active)
-  
-    new_status = brewery.active? ? "active" : "retired"
-  
-    redirect_to brewery, notice:"brewery activity status changed to #{new_status}"
   end
 end
