@@ -16,15 +16,23 @@
   <% end %>
 <% end%>
 
-<p><strong>Beer club memberships:</strong></p>
 
-<div>
+<h3>Beer clubs:</h3>
+<h5> member of:</h5>
   <ul>
-    <% @user.beer_clubs.each do |club| %>
-      <li><%= link_to club.name, club %></li>
+    <% @clubs.each do |club| %>
+      <li><%= link_to club[0].name, club[0] %></li>
     <% end %>
   </ul>
-</div>
+
+<% if current_user == @user && @applications.length > 0%>
+  <h5> applied membership of:</h5>
+  <ul>
+    <% @applications.each do |club| %>
+      <li><%= link_to club[0].name, club[0] %></li>
+    <% end %>
+  </ul>
+<% end %>
 
 <p><strong>Ratings:</strong></p>
 
@@ -40,8 +48,7 @@
 
 <div>
   <% if @user == current_user %>
-    <%= edit_and_destroy_buttons(@user) %>
+    <p><%= edit_and_destroy_buttons(@user) %></p>
   <% end %>
-
-  <p><%= link_to "Back to users", users_path %></p>
+<p><%= link_to "Back to users", users_path %></p>
 </div>

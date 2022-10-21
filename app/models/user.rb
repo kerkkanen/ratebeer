@@ -63,6 +63,6 @@ class User < ApplicationRecord
   end
 
   def self.active(n)
-    User.all.sort_by{|u| u.ratings.count}.reverse.first(n)
+    User.all.sort_by{ |u| u.ratings.count }.reverse.first(n)
   end
 end

@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
 
   def admin
     return nil if session[:admin].nil?
+
     true
   end
 

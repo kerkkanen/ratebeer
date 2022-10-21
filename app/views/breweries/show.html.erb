@@ -1,7 +1,36 @@
-<%= render @brewery %>
+<% cache @brewery do %>
+  <h2>
+    <%= @brewery.name %>
+  </h2>
+  </p>
+
+  <p>
+    <i>Established in: <%= @brewery.year %></i>
+  </p>
+
+  <p>
+    Beers count: <%= @brewery.beers.count %>
+  </p>
+
+  <p>
+  <ul>
+    <% @brewery.beers.each do |beer| %>
+      <li><%= link_to beer.name, beer %></li>
+    <% end %>
+    </ul>
+  </p>
+
+  <p>
+    <% if @brewery.ratings.any? %>
+      Brewery has <%= @brewery.ratings.count %> <%= 'rating'.pluralize(@brewery.ratings.count) %>  with an average of <%= round(@brewery.average_rating) %>
+    <% end %>
+  </p>
+
+
+<% end %>
 
 <div>
 <p><%= button_to"Change activity", toggle_activity_brewery_path(@brewery.id), class: "btn btn-primary" %></p>
- <%= edit_and_destroy_buttons(@brewery) %>
+ <p><%= edit_and_destroy_buttons(@brewery) %></p>
  <p><%= link_to "Back to breweries", breweries_path %></p>
 </div>

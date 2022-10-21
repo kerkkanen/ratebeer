@@ -32,10 +32,11 @@ class MembershipsController < ApplicationController
   def create
     @membership = Membership.create params.require(:membership).permit(:beer_club_id)
     @membership.user = current_user
+    @membership.confirmed = false
 
     respond_to do |format|
       if @membership.save
-        format.html { redirect_to beer_club_url(@membership.beer_club_id), notice: "#{current_user.username}, welcome to the club!" }
+        format.html { redirect_to beer_club_url(@membership.beer_club_id), notice: "#{current_user.username}, welcome to the club! Wait for membership confirmation." }
         format.json { render :show, status: :created, location: @membership }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -68,6 +69,14 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def accept()
+    membership = Membership.find(params[:id])
+    membership.confirmed = true
+    membership.save
+    redirect_to beer_club_url
+    
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -77,6 +86,6 @@ class MembershipsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def membership_params
-    params.require(:membership).permit(:id, :user_id, :beer_club_id)
+    params.require(:membership).permit(:id, :user_id, :beer_club_id, :confirmed)
   end
 end

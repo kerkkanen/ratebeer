@@ -4,11 +4,10 @@
   <h3>Username: <%= user.username %></h3>
   <% if not user.active %>
     <span class="badge bg-danger">closed</span>
+    <p>Has made <%= "#{user.ratings.size}"%> ratings, average rating <%= "#{user.average_rating}" %></p>
   <% end %>
-  <p>Has made <%=user.ratings.count %> <%= 'rating'.pluralize(user.ratings.count) %>, average rating <%= round(user.average_rating) %> </p>
-  <p>Favorite style:  <%= user.favorite_style %></p>
-  <p>Favorite brewery:  <%= user.favorite_brewery %></p>
   <p><%= link_to "Show this user", user%> </p>
 <% end %>
 
 <%= link_to "New user", new_user_path, class:'btn btn-primary' %>
+

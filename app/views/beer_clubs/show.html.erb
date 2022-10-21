@@ -1,24 +1,58 @@
 <%= render @beer_club %>
 
-<% if current_user && @memberships.where(user_id: current_user, beer_club_id: @beer_club.id).empty?%>
+<% if current_user %>
 
-  <h4>join the club:</h4>
-  
-  <%= form_with(model: @membership) do |form| %>
-    <%= form.hidden_field :beer_club_id, value: @beer_club.id %>
-    <%= form.hidden_field :user_id, value: current_user.id %>
-    <p><%= form.submit "Join the beer club" %></p>
-  <% end %>
+<% if @applicants.where(user_id: current_user.id, beer_club_id: @beer_club.id).length > 0%>
+  <p>Waiting for confirmation</p> 
 
 <% else %>
-    <% if current_user %>
-    <%= form_with(model: @user_membership, method: :delete) do |form| %>      
-      <p><%= form.submit "End the membership" %></p>
+
+  <% if @memberships.where(user_id: current_user.id, beer_club_id: @beer_club.id).empty?%>
+
+    <h4>join the club:</h4>
+    
+    <%= form_with(model: @membership) do |form| %>
+      <%= form.hidden_field :beer_club_id, value: @beer_club.id %>
+      <%= form.hidden_field :user_id, value: current_user.id %>
+      <%= form.hidden_field :confirmed, value: false %>
+      <p><%= form.submit "Join the beer club" %></p>
     <% end %>
+
+  <% else %>
+
+      <%= form_with(model: @user_membership, method: :delete) do |form| %>      
+        <p><%= form.submit "End the membership" %></p>
+      <% end %>
+
   <% end %>
 <% end %>
 
+
+  
+    <strong>Members:</strong> <%= @memberships.count%>
+    <ul>
+      <% @memberships.each do |m| %> 
+          <li><%= link_to m.user.username, m.user %></li>
+      <% end %>
+    </ul>
+  </p>
+
+  <% if @memberships.where(user_id: current_user.id, beer_club_id: @beer_club.id).length > 0%>
+
+    <strong>Membership applications:</strong> <%= @applicants.count%>
+      <ul>
+        <% @applicants.each do |a| %>
+            <li><%= link_to a.user.username, a.user %> <%= button_to "Confirm", url_for([:accept, a]), class: "btn btn-primary btn-sm" %></li>
+        <% end %>
+      </ul>
+    </p>
+  <% end %>
+
+    <% else %>
+    <strong>Members: </strong> <%= @memberships.count %>
+
+<% end %>
 <div>
-  <%= edit_and_destroy_buttons(@beer_club) %>
+  <p><%= edit_and_destroy_buttons(@beer_club) %></p>
   <p><%= link_to "Back to beer clubs", beer_clubs_path %></p>
 </div>

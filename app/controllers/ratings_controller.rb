@@ -2,12 +2,12 @@ class RatingsController < ApplicationController
   before_action :ensure_that_signed_in, except: [:index, :show]
 
   def index
+    @ratings = Rating.all
     @active_users = User.active 3
     @latest_ratings = Rating.latest 5
     @top_breweries = Brewery.top 3
     @top_beers = Beer.top 3
     @top_styles = Style.top 3
-    
   end
 
   def new

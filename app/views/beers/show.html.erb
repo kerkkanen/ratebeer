@@ -1,4 +1,25 @@
-<%= render @beer %>
+<% cache @beer do %>
+
+  <h3>
+    <%= @beer.name %>
+  </h3>
+  <p>
+    <%= @beer.style.name %>
+  </p>
+
+  <p>
+    <%= link_to "#{@beer.brewery.name}", @beer.brewery %>
+  </p>
+
+  <p>
+    <% if @beer.ratings.empty? %>
+      beer has not yet been rated
+    <% else %>
+      Beer has <%= pluralize(@beer.ratings.count, "rating") %>
+      with an average of <%= @beer.average_rating %>
+  <% end %>
+  </p>
+<% end %>
 
 <% if current_user%>
 
@@ -12,6 +33,6 @@
 <% end %>
 
 <div>
-  <%= edit_and_destroy_buttons(@beer) %>
+  <p><%= edit_and_destroy_buttons(@beer) %></p>
   <p><%= link_to "Back to beers", beers_path %></p>
 </div>

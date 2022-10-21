@@ -3,12 +3,16 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    @users = User.all
-    @closed = nil #User.closed
+    @users = User.includes(:ratings).all
   end
 
   # GET /users/1 or /users/1.json
   def show
+    memberships = Membership.where(user_id: params[:id], confirmed: true).map{|m| m.beer_club.id}
+    @clubs = memberships.each.map{|m| BeerClub.where(id: m)}
+
+    applied = Membership.where(user_id: current_user.id, confirmed: false).map{|m| m.beer_club.id}
+    @applications = applied.map{|m| BeerClub.where id: m}
   end
 
   # GET /users/new
@@ -23,7 +27,7 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-    #@user.active = true
+    # @user.active = true
 
     respond_to do |format|
       if @user.save
@@ -59,11 +63,11 @@ class UsersController < ApplicationController
 
   def toggle_activity
     user = User.find(params[:id])
-    user.update_attribute :active, (not user.active)
-  
+    user.update_attribute :active, !user.active
+
     new_status = user.active? ? "active" : "closed"
-  
-    redirect_to user, notice:"user's activity status changed to #{new_status}"
+
+    redirect_to user, notice: "user's activity status changed to #{new_status}"
   end
 
   private

@@ -8,7 +8,7 @@ class Brewery < ApplicationRecord
   validate  :year_between_1040_and_now
 
   scope :active, -> { where active: true }
-  scope :retired, -> { where active: [nil,false] }
+  scope :retired, -> { where active: [nil, false] }
 
   def print_report
     puts name
@@ -28,10 +28,10 @@ class Brewery < ApplicationRecord
   end
 
   def to_s
-    "#{self.name}"
+    name.to_s
   end
 
   def self.top(n)
-   sorted_by_rating_in_desc_order = Brewery.all.sort{|b| b.average_rating}.reverse.first(n)
- end
+    Brewery.all.sort(&:average_rating).reverse.first(n)
+  end
 end
