@@ -4,9 +4,11 @@
   <span class="badge bg-danger">closed</span>
 <% end %>
 
-<p>Has made <%= @user.ratings.count %> <%= 'rating'.pluralize(@user.ratings.count) %>, average rating <%= round(@user.average_rating) %> </p>
-<p>Favorite style beer:  <%= @user.favorite_style.name %></p>
-<p>Favorite brewery:  <%= @user.favorite_brewery.name %></p>
+<% if @user.ratings.length > 0%>
+  <p>Has made <%= @user.ratings.count %> <%= 'rating'.pluralize(@user.ratings.count) %>, average rating <%= round(@user.average_rating) %> </p>
+  <p>Favorite style beer:  <%= @user.favorite_style.name %></p>
+  <p>Favorite brewery:  <%= @user.favorite_brewery.name %></p>
+<% end %>
 
 <% if admin %>
   <% if @user.active%>
@@ -25,7 +27,7 @@
     <% end %>
   </ul>
 
-<% if current_user == @user && @applications.length > 0%>
+<% if current_user && current_user == @user && @applications.length > 0%>
   <h5> applied membership of:</h5>
   <ul>
     <% @applications.each do |club| %>
