@@ -7,10 +7,10 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-import { beers } from "custom/utils";
+import { beers } from "./custom/utils";
 
 beers();
 
-import { breweries } from "custom/brew";
+import { breweries } from "./custom/brew";
 
 breweries();
