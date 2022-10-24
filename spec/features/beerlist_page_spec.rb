@@ -14,7 +14,7 @@ describe "Beerlist page" do
     end
   
     Capybara.javascript_driver = :chrome
-    WebMock.disable_net_connect!(allow_localhost: true)
+    WebMock.allow_net_connect!
   end
 
   before :each do
@@ -45,7 +45,6 @@ describe "Beerlist page" do
     visit beerlist_path
     find_by_id("style").click
     first = find('#beertable').first('.tablerow')
-    save_and_open_page
     expect(first).to have_content "Lager"
   end
 

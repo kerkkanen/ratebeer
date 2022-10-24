@@ -8,11 +8,12 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
-    memberships = Membership.where(user_id: params[:id], confirmed: true).map{|m| m.beer_club.id}
-    @clubs = memberships.each.map{|m| BeerClub.where(id: m)}
+    @ratings = @user.ratings
+    memberships = Membership.where(user_id: params[:id], confirmed: true).map{ |m| m.beer_club.id }
+    @clubs = memberships.each.map{ |m| BeerClub.where(id: m) }
 
-    applied = Membership.where(user_id: current_user.id, confirmed: false).map{|m| m.beer_club.id}
-    @applications = applied.map{|m| BeerClub.where id: m}
+    applied = Membership.where(user_id: current_user.id, confirmed: false).map{ |m| m.beer_club.id }
+    @applications = applied.map{ |m| BeerClub.where id: m }
   end
 
   # GET /users/new

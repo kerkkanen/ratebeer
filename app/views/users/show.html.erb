@@ -5,8 +5,8 @@
 <% end %>
 
 <p>Has made <%= @user.ratings.count %> <%= 'rating'.pluralize(@user.ratings.count) %>, average rating <%= round(@user.average_rating) %> </p>
-<p>Favorite style beer:  <%= @user.favorite_style %></p>
-<p>Favorite brewery:  <%= @user.favorite_brewery %></p>
+<p>Favorite style beer:  <%= @user.favorite_style.name %></p>
+<p>Favorite brewery:  <%= @user.favorite_brewery.name %></p>
 
 <% if admin %>
   <% if @user.active%>
@@ -38,7 +38,7 @@
 
 <ul>
   <% @user.ratings.each do |rating| %>
-    <li><%= "#{rating.to_s}" %>
+    <li><%= rating.to_s %>
       <% if @user == current_user %>
         <%= button_to 'delete', rating, method: :delete, form: { style: 'display:inline-block;',  data: { 'turbo-confirm': 'Are you sure?' }} %>
       <% end %>

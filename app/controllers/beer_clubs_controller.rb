@@ -40,7 +40,6 @@ class BeerClubsController < ApplicationController
   def create
     @beer_club = BeerClub.new(beer_club_params)
 
-
     respond_to do |format|
       if @beer_club.save
         Membership.create(user_id: current_user.id, beer_club_id: @beer_club.id, confirmed: true)

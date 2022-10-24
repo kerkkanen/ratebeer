@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+include Helpers
+
 
 describe "Beer" do
     before :each do
@@ -11,6 +13,7 @@ describe "Beer" do
 
     it "adds new beer if name is not blank" do        
         fill_in('beer_name', with: 'Kalia')
+        save_and_open_page
 
         expect{
         click_button('Create Beer')

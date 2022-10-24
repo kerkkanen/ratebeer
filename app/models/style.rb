@@ -1,22 +1,10 @@
 class Style < ApplicationRecord
-  def to_s
-    name.to_s
-  end
+  include RatingAverage
+  has_many :beers
+  has_many :ratings, through: :beers
 
-  def self.top(n)
-    ratings = Rating.all.map{ |r| [r.beer.style_id, r.score] }
-    ids = ratings.map{ |r| r[0] }
-    styles = Style.all.map(&:id)
-    results = {}
-    styles.each do |s|
-      results[s] = 0
-    end
-    ratings.map{ |r| results[r[0]] += r[1] }
-    results.each do |key, value|
-      if ids.count(key) > 0
-        results[key] = value / ids.count(key)
-      end
-    end
-    (results.sort_by{ |_k, v| v }.last(n).map{ |r| [Style.where(id: r[0]), r[1]] }).reverse
+  def self.top(amount)
+    sorted_by_rating_in_desc_order = Brewery.all.sort_by{ |b| -(b.average_rating || 0) }
+    sorted_by_rating_in_desc_order[0, amount]
   end
 end

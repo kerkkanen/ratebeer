@@ -1,13 +1,10 @@
 class RatingsController < ApplicationController
-  before_action :ensure_that_signed_in, except: [:index, :show]
-
   def index
-    @ratings = Rating.all
-    @active_users = User.active 3
-    @latest_ratings = Rating.latest 5
-    @top_breweries = Brewery.top 3
-    @top_beers = Beer.top 3
-    @top_styles = Style.top 3
+    @recent = Rating.recent
+    @breweries = Brewery.top(3)
+    @beers = Beer.top(3)
+    @styles = Style.top(3)
+    @users = User.top(3)
   end
 
   def new
@@ -16,8 +13,7 @@ class RatingsController < ApplicationController
   end
 
   def create
-    @rating = Rating.create params.require(:rating).permit(:score, :beer_id)
-    session[:last_rating] = "#{@rating.beer.name} #{@rating.score} points"
+    @rating = Rating.new params.require(:rating).permit(:score, :beer_id)
     @rating.user = current_user
 
     if @rating.save
@@ -30,7 +26,7 @@ class RatingsController < ApplicationController
 
   def destroy
     rating = Rating.find(params[:id])
-    rating.destroy if current_user == rating.user
-    redirect_to user_path current_user
+    rating.delete if current_user == rating.user
+    redirect_to ratings_path
   end
 end

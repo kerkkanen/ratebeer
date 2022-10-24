@@ -69,12 +69,11 @@ class MembershipsController < ApplicationController
     end
   end
 
-  def accept()
+  def accept
     membership = Membership.find(params[:id])
     membership.confirmed = true
     membership.save
     redirect_to beer_club_url
-    
   end
 
   private

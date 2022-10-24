@@ -1,37 +1,23 @@
 class Brewery < ApplicationRecord
   include RatingAverage
 
+  validates :name, presence: true
+  validates :year, numericality: { greater_than_or_equal_to: 1040,
+                                   only_integer: true }
+  validate :year_not_greater_than_this_year
+
   has_many :beers, dependent: :destroy
   has_many :ratings, through: :beers
-
-  validates :name, presence: true
-  validate  :year_between_1040_and_now
 
   scope :active, -> { where active: true }
   scope :retired, -> { where active: [nil, false] }
 
-  def print_report
-    puts name
-    puts "established at year #{year}"
-    puts "number of beers #{beers.count}"
+  def self.top(amount)
+    sorted_by_rating_in_desc_order = Brewery.all.sort_by{ |b| -(b.average_rating || 0) }
+    sorted_by_rating_in_desc_order[0, amount]
   end
 
-  def restart
-    self.year = 2007
-    puts "changed year to #{year}"
-  end
-
-  def year_between_1040_and_now
-    return if !year.nil? && year > 1040 && year <= Time.now.year
-
-    errors.add(:year, "is invalid: must be between 1040 and current year")
-  end
-
-  def to_s
-    name.to_s
-  end
-
-  def self.top(n)
-    Brewery.all.sort(&:average_rating).reverse.first(n)
+  def year_not_greater_than_this_year
+    errors.add(:year, "can't be greater than current year") if year > Time.now.year
   end
 end
