@@ -77,5 +77,4 @@ const beers = () => {
 
 };
 
-
 export { beers };
