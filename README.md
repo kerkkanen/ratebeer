@@ -5,4 +5,5 @@
 # Rate beer -sovellus
 
 (Unfortunately after changes in Heroku's policies, the app is no longer available.)
+
 Sovellus löytyy [Herokusta](https://still-sea-33833.herokuapp.com/breweries)
