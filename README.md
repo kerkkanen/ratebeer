@@ -6,4 +6,4 @@
 
 (Unfortunately after changes in Heroku's policies, the app is no longer available.)
 
-[Herokusta](https://still-sea-33833.herokuapp.com/breweries)
+[Heroku](https://still-sea-33833.herokuapp.com/breweries)
