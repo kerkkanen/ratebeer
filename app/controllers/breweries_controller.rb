@@ -5,7 +5,6 @@ class BreweriesController < ApplicationController
 
   # GET /breweries or /breweries.json
   def index
-    return if request.format.html? && fragment_exist?('brewerylist')
 
     @breweries = Brewery.all
     @active_breweries = Brewery.active

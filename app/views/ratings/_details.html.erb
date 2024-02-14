@@ -1,0 +1,11 @@
+<%= turbo_frame_tag "rating_details" do %>
+  <div style="width: 250px; border: solid 3px red; margin-top: 10px; padding: 10px;">
+    <strong style="font-size: 26px;"><%= @rating.beer.name %></strong>
+    <br>
+    style <%= @rating.beer.style.name %>
+    <br>
+    brewed by <%= @rating.beer.brewery.name %>
+    <br>
+    rate <%= @rating.created_at.strftime("%d.%m.%Y") %>
+  </div>
+<% end %>

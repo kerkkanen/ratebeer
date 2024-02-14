@@ -3,12 +3,13 @@ class StylesController < ApplicationController
 
   # GET /styles or /styles.json
   def index
-    @styles = Style.all
+      @styles = Style.all
   end
 
-  # GET /styles/1 or /styles/1.json
   def show
-    @beers = Beer.all
+    if turbo_frame_request?
+      render partial: 'details', locals: { style: @style }
+    end
   end
 
   # GET /styles/new

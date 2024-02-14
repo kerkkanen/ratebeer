@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   resources :users
   resources :beers
 
-  resources :ratings, only: [:index, :new, :create, :destroy]
-  resource  :session, only: [:new, :create, :destroy]
+  resources :ratings, only: [:index, :show, :new, :create, :destroy]
+  resource :session, only: [:new, :create, :destroy]
   resources :places, only: [:index, :show]
   resources :styles
   resources :breweries do

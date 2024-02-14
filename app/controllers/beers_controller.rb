@@ -6,7 +6,6 @@ class BeersController < ApplicationController
   # GET /beers or /beers.json
   def index
     @order = params[:order] || 'name'
-    return if request.format.html? && fragment_exist?("beerlist-#{@order}")
 
     @beers = Beer.includes(:brewery, :style, :ratings).all
 
@@ -45,7 +44,7 @@ class BeersController < ApplicationController
 
   # POST /beers or /beers.json
   def create
-    %w(beerlist-name beerlist-brewery beerlist-style beerlist-rating).each{ |f| expire_fragment(f) }
+    %w(beerlist-name beerlist-brewery beerlist-style beerlist-rating).each { |f| expire_fragment(f) }
 
     @beer = Beer.new(beer_params)
 
@@ -62,7 +61,7 @@ class BeersController < ApplicationController
 
   # PATCH/PUT /beers/1 or /beers/1.json
   def update
-    %w(beerlist-name beerlist-brewery beerlist-style beerlist-rating).each{ |f| expire_fragment(f) }
+    %w(beerlist-name beerlist-brewery beerlist-style beerlist-rating).each { |f| expire_fragment(f) }
 
     respond_to do |format|
       if @beer.update(beer_params)
@@ -77,7 +76,7 @@ class BeersController < ApplicationController
 
   # DELETE /beers/1 or /beers/1.json
   def destroy
-    %w(beerlist-name beerlist-brewery beerlist-style beerlist-rating).each{ |f| expire_fragment(f) }
+    %w(beerlist-name beerlist-brewery beerlist-style beerlist-rating).each { |f| expire_fragment(f) }
 
     @beer.destroy
 

@@ -12,6 +12,13 @@ class RatingsController < ApplicationController
     @beers = Beer.all
   end
 
+  def show
+    @rating = Rating.includes(beer: :brewery).find(params[:id])
+    if turbo_frame_request?
+      render partial: 'details', locals: { rating: @rating, brewery: @rating.beer.brewery }
+    end
+  end
+
   def create
     @rating = Rating.new params.require(:rating).permit(:score, :beer_id)
     @rating.user = current_user

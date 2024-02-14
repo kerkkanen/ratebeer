@@ -4,30 +4,31 @@
   <span class="badge bg-danger">closed</span>
 <% end %>
 
-<% if @user.ratings.length > 0%>
-  <p>Has made <%= @user.ratings.count %> <%= 'rating'.pluralize(@user.ratings.count) %>, average rating <%= round(@user.average_rating) %> </p>
+<% if @user.ratings.length > 0 %>
+  <p>Has made <%= @user.ratings.count %> <%= 'rating'.pluralize(@user.ratings.count) %>, average
+    rating <%= round(@user.average_rating) %> </p>
   <p>Favorite style beer:  <%= @user.favorite_style.name %></p>
   <p>Favorite brewery:  <%= @user.favorite_brewery.name %></p>
 <% end %>
 
 <% if admin %>
-  <% if @user.active%>
-    <p><%= button_to "Close account ", toggle_activity_user_path(@user.id), data: {turbo_method: "post"}, class: "btn btn-danger" %></p>
+  <% if @user.active %>
+    <p><%= button_to "Close account ", toggle_activity_user_path(@user.id), data: { turbo_method: "post" }, class: "btn btn-danger" %></p>
   <% else %>
-    <p><%= button_to "Open account", toggle_activity_user_path(@user.id), data: {turbo_method: "post"}, class: "btn btn-primary" %></p>
+    <p><%= button_to "Open account", toggle_activity_user_path(@user.id), data: { turbo_method: "post" }, class: "btn btn-primary" %></p>
   <% end %>
-<% end%>
+<% end %>
 
 
 <h3>Beer clubs:</h3>
 <h5> member of:</h5>
-  <ul>
-    <% @clubs.each do |club| %>
-      <li><%= link_to club[0].name, club[0] %></li>
-    <% end %>
-  </ul>
+<ul>
+  <% @clubs.each do |club| %>
+    <li><%= link_to club[0].name, club[0] %></li>
+  <% end %>
+</ul>
 
-<% if current_user && current_user == @user && @applications.length > 0%>
+<% if current_user && current_user == @user && @applications.length > 0 %>
   <h5> applied membership of:</h5>
   <ul>
     <% @applications.each do |club| %>
@@ -39,12 +40,17 @@
 <p><strong>Ratings:</strong></p>
 
 <ul>
-  <% @user.ratings.each do |rating| %>
-    <li><%= rating.to_s %>
-      <% if @user == current_user %>
-        <%= button_to 'delete', rating, method: :delete, form: { style: 'display:inline-block;',  data: { 'turbo-confirm': 'Are you sure?' }} %>
-      <% end %>
-    </li>
+  <%= turbo_frame_tag "ratings" do %>
+    <% @user.ratings.each do |rating| %>
+      <li><%= link_to rating, rating, data: { turbo_frame: "rating_details" } %>
+        <% if @user == current_user %>
+          <%= button_to 'delete', rating, method: :delete, form: { style: 'display:inline-block;', data: { 'turbo-confirm': 'Are you sure?' } } %>
+        <% end %>
+      </li>
+    <% end %>
+  <% end %>
+
+  <%= turbo_frame_tag "rating_details" do %>
   <% end %>
 </ul>
 
@@ -52,5 +58,5 @@
   <% if @user == current_user %>
     <p><%= edit_and_destroy_buttons(@user) %></p>
   <% end %>
-<p><%= link_to "Back to users", users_path %></p>
+  <p><%= link_to "Back to users", users_path %></p>
 </div>
