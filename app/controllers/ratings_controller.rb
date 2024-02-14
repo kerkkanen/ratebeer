@@ -1,10 +1,18 @@
 class RatingsController < ApplicationController
+
+  PAGE_SIZE = 3
   def index
-    @recent = Rating.recent
     @breweries = Brewery.top(3)
     @beers = Beer.top(3)
     @styles = Style.top(3)
     @users = User.top(3)
+
+    #@order = params[order: :desc] || 'created_at'
+    @page = params[:page]&.to_i || 1
+    @last_page = (Rating.count.to_f / PAGE_SIZE).ceil
+    offset = (@page - 1) * PAGE_SIZE
+
+    @recent = Rating.includes(:user).order(created_at: :desc).limit(PAGE_SIZE).offset(offset)
   end
 
   def new

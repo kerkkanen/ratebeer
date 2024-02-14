@@ -69,10 +69,17 @@
 
 <h4>Recent ratings</h4>
 
+<% unless @page == 1 %>
+  <%= link_to "<<< Previous page", ratings_path(page: @page - 1, recent: @recent) %>
+<% end %>
+<% unless @page == @last_page %>
+  <%= link_to "Next page >>>", ratings_path(page: @page + 1, recent: @recent) %>
+<% end %>
+
 <ul>
   <% @recent.each do |rating| %>
     <li>
-      <%= "#{rating.beer.name} #{rating.score} #{rating.created_at}" %>
+      <%= "#{rating.beer.name} got #{rating.score} points from #{rating.user.username} at #{rating.created_at.strftime("%d.%m.%Y %H:%M")}" %>
     </li>
   <% end %>
 </ul>

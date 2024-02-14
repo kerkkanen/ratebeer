@@ -10,7 +10,7 @@
   <tbody>
   <% @beers.each do |beer| %>
     <tr>
-      <td><%= link_to beer.name %></td>
+      <td><%= link_to beer.name, beer %></td>
       <td><%= link_to beer.style.name, beer.style %></td>
       <td><%= link_to beer.brewery.name, beer.brewery %></td>
       <td><%= round(beer.average_rating) %></td>
@@ -31,4 +31,4 @@
   </tbody>
 </table>
 
-<%= link_to('New Beer', new_beer_path, class:'btn btn-primary') if current_user %>
+<%= link_to('New Beer', new_beer_path, class:"btn btn-primary") if current_user %>
