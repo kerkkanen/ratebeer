@@ -11,12 +11,12 @@
         <th>rating</th>
         </thead>
         <tbody>
-          <% @beers.each do |beer| %>
-            <tr>
-              <td><%= link_to beer.name, beer %> </td>
-              <td><%= round(beer.average_rating) %> </td>
-            </tr>
-          <% end %>
+        <% @beers.each do |beer| %>
+          <tr>
+            <td><%= link_to beer.name, beer %> </td>
+            <td><%= round(beer.average_rating) %> </td>
+          </tr>
+        <% end %>
         </tbody>
       </table>
     </div>
@@ -69,17 +69,23 @@
 
 <h4>Recent ratings</h4>
 
-<% unless @page == 1 %>
-  <%= link_to "<<< Previous page", ratings_path(page: @page - 1, recent: @recent) %>
-<% end %>
-<% unless @page == @last_page %>
-  <%= link_to "Next page >>>", ratings_path(page: @page + 1, recent: @recent) %>
+<% if @order == "oldest" %>
+  <%= link_to "newest first", ratings_path(page: @page, order: "newest") %>
+<% else %>
+  <%= link_to "oldest first", ratings_path(page: @page, order: "oldest") %>
 <% end %>
 
 <ul>
-  <% @recent.each do |rating| %>
+  <% @ratings.each do |rating| %>
     <li>
       <%= "#{rating.beer.name} got #{rating.score} points from #{rating.user.username} at #{rating.created_at.strftime("%d.%m.%Y %H:%M")}" %>
     </li>
   <% end %>
 </ul>
+
+<% unless @page == 1 %>
+  <%= link_to "<<< Previous", ratings_path(page: @page - 1, order: @order) %>
+<% end %>
+<% unless @page == @last_page %>
+  <%= link_to "Next >>>", ratings_path(page: @page + 1, order: @order) %>
+<% end %>
