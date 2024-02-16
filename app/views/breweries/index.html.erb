@@ -1,10 +1,22 @@
 <h1>Breweries</h1>
 
-<%= turbo_frame_tag "active_breweries_frame", src: active_breweries_path do %>
-  searching active breweries...
-<% end %>
+<h3>Active</h3>
+Number of active breweries: <%= Brewery.active.count %>
+<div>
+  <%= turbo_frame_tag "active", src: active_breweries_path do %>
+    searching active breweries...
+  <% end %>
+</div>
 
-<%= turbo_frame_tag "retired_breweries_frame", src: retired_breweries_path do %>
-<% end %>
+<h3>Retired</h3>
+Number of retired breweries: <%= Brewery.all.count - Brewery.active.count %>
+<div>
+  <%= turbo_frame_tag "retired", src: retired_breweries_path do %>
+  <% end %>
+</div>
 
-<%= link_to('New Brewery', new_brewery_path, class: 'btn btn-primary') if current_user %>
+<div>
+  <%= turbo_frame_tag "new_brewery", src: new_brewery_path if current_user %>
+</div>
+
+<%= turbo_stream_from "breweries_index" %>

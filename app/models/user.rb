@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   has_many :ratings, dependent: :destroy
   has_many :beers, through: :ratings
-
+  has_many :messages, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :beer_clubs, through: :memberships
 

@@ -20,4 +20,14 @@ class Brewery < ApplicationRecord
   def year_not_greater_than_this_year
     errors.add(:year, "can't be greater than current year") if year > Time.now.year
   end
+
+  after_create_commit do
+    target_id = if active
+                  "active_brewery_rows"
+                else
+                  "retired_brewery_rows"
+                end
+
+    broadcast_append_to "breweries_index", partial: "breweries/brewery_row", target: target_id
+  end
 end

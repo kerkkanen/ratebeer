@@ -32,6 +32,10 @@ class BreweriesController < ApplicationController
 
     respond_to do |format|
       if @brewery.save
+        format.turbo_stream {
+          status = @brewery.active? ? "active" : "retired"
+          render turbo_stream: turbo_stream.append("#{status}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery })
+        }
         format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully created." }
         format.json { render :show, status: :created, location: @brewery }
       else
@@ -76,15 +80,15 @@ class BreweriesController < ApplicationController
   def active
     # simulate a delay in calculating the recommendation
     sleep(2)
-    @breweries_tag = "active_breweries_frame"
+    status = "active"
     @breweries = Brewery.active
-    render partial: 'brewery_list', locals: { breweries: @breweries }
+    render partial: 'brewery_list', locals: { breweries: @breweries, status: status }
   end
 
   def retired
-    @breweries_tag = "retired_breweries_frame"
+    status = "retired"
     @breweries = Brewery.retired
-    render partial: 'brewery_list', locals: { breweries: @breweries }
+    render partial: 'brewery_list', locals: { breweries: @breweries, status: status }
   end
 
   private

@@ -1,4 +1,4 @@
-<%= turbo_frame_tag @breweries_tag do %>
+<%= turbo_frame_tag status do %>
   <div>
     <table class="table table-striped">
       <thead>
@@ -8,19 +8,11 @@
       <th>Rating</th>
       <th>Activity</th>
       </thead>
+      <tbody id="<%= status %>_brewery_rows">
       <% @breweries.each do |brewery| %>
-        <tr>
-          <td><%= link_to brewery.name, brewery %></td>
-          <td><%= brewery.year %></td>
-          <td><%= brewery.beers.count %></td>
-          <td><%= round(brewery.average_rating) %></td>
-          <% if brewery.active %>
-            <td><span class="badge bg-success">active</span></td>
-          <% else %>
-            <td><span class="badge bg-secondary">retired</span></td>
-          <% end %>
-        </tr>
+        <%= render "brewery_row", brewery: brewery %>
       <% end %>
+      </tbody>
     </table>
   </div>
 <% end %>

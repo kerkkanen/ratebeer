@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :ratings, only: [:index, :show, :new, :create, :destroy]
   resource :session, only: [:new, :create, :destroy]
   resources :places, only: [:index, :show]
+  resources :messages, only: [:index, :new, :create]
   resources :styles
   resources :breweries do
     post 'toggle_activity', on: :member
