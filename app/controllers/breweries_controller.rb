@@ -76,8 +76,15 @@ class BreweriesController < ApplicationController
   def active
     # simulate a delay in calculating the recommendation
     sleep(2)
-    @active_breweries = Brewery.active
-    render partial: 'active_breweries', locals: { breweries: @active_breweries }
+    @breweries_tag = "active_breweries_frame"
+    @breweries = Brewery.active
+    render partial: 'brewery_list', locals: { breweries: @breweries }
+  end
+
+  def retired
+    @breweries_tag = "retired_breweries_frame"
+    @breweries = Brewery.retired
+    render partial: 'brewery_list', locals: { breweries: @breweries }
   end
 
   private

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :breweries do
     post 'toggle_activity', on: :member
     get 'active', on: :collection
+    get 'retired', on: :collection
   end
   resources :users do
     post 'toggle_activity', on: :member

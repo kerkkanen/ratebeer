@@ -1,23 +1,26 @@
-<%= turbo_frame_tag "active_breweries_tag", src: active_breweries_path do %>
-  searching active breweries...
-<% end %><div>
-  <h3>Retired breweries</h3>
-  <table class="table table-striped">
-    <thead>
-    <th>Name</th>
-    <th>Founded</th>
-    <th>Beers</th>
-    <th>Rating</th>
-    <th>Activity</th>
-    </thead>
-    <% @retired_breweries.each do |brewery| %>
-      <tr>
-        <td><%= link_to brewery.name, brewery %></td>
-        <td><%= brewery.year %></td>
-        <td><%= brewery.beers.count %></td>
-        <td><%= round(brewery.average_rating) %></td>
-        <td><span class="badge bg-secondary">retired</span></td>
-      </tr>
-    <% end %>
-  </table>
-</div>
+<%= turbo_frame_tag @breweries_tag do %>
+  <div>
+    <table class="table table-striped">
+      <thead>
+      <th>Name</th>
+      <th>Founded</th>
+      <th>Beers</th>
+      <th>Rating</th>
+      <th>Activity</th>
+      </thead>
+      <% @breweries.each do |brewery| %>
+        <tr>
+          <td><%= link_to brewery.name, brewery %></td>
+          <td><%= brewery.year %></td>
+          <td><%= brewery.beers.count %></td>
+          <td><%= round(brewery.average_rating) %></td>
+          <% if brewery.active %>
+            <td><span class="badge bg-success">active</span></td>
+          <% else %>
+            <td><span class="badge bg-secondary">retired</span></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>
