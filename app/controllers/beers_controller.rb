@@ -24,6 +24,12 @@ class BeersController < ApplicationController
                                     .order("avg(ratings.score) DESC").limit(PAGE_SIZE).offset(offset)
              end
 
+    if turbo_frame_request?
+      render partial: "beer_list",
+             locals: { beers: @beers, page: @page, order: @order, last_page: @last_page }
+    else
+      render :index
+    end
   end
 
   def list
@@ -93,7 +99,7 @@ class BeersController < ApplicationController
     end
   end
 
-  private
+private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_beer

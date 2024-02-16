@@ -1,18 +1,18 @@
 Rails.application.routes.draw do
   resources :memberships
   resources :beer_clubs
-  resources :users
   resources :beers
-
   resources :ratings, only: [:index, :show, :new, :create, :destroy]
   resource :session, only: [:new, :create, :destroy]
   resources :places, only: [:index, :show]
   resources :styles
   resources :breweries do
     post 'toggle_activity', on: :member
+    get 'active', on: :collection
   end
   resources :users do
     post 'toggle_activity', on: :member
+    get 'recommendation', on: :member
   end
   resources :memberships do
     post 'accept', on: :member

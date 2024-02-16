@@ -1,0 +1,23 @@
+<%= turbo_frame_tag "active_breweries_tag" do %>
+  <h3>Active breweries</h3>
+  <div>
+    <table class="table table-striped">
+      <thead>
+      <th>Name</th>
+      <th>Founded</th>
+      <th>Beers</th>
+      <th>Rating</th>
+      <th>Activity</th>
+      </thead>
+      <% @active_breweries.each do |brewery| %>
+        <tr>
+          <td><%= link_to brewery.name, brewery %></td>
+          <td><%= brewery.year %></td>
+          <td><%= brewery.beers.count %></td>
+          <td><%= round(brewery.average_rating) %></td>
+          <td><span class="badge bg-success">active</span></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>

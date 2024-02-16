@@ -14,7 +14,7 @@
     <strong>Beers:</strong>
   </p>
   <ul>
-  <% @beers.each do |beer| %>
+  <% @style.beers.each do |beer| %>
     <% if beer.style_id == style.id%>
       <li><p><%= link_to beer.name, beer %></li>
     <% end %>

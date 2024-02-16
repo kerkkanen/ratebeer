@@ -55,6 +55,12 @@
 </ul>
 
 <div>
+  <%= turbo_frame_tag "beer_recommendation_tag", src: recommendation_user_path do %>
+    calculating the recommendation...
+  <% end %>
+</div>
+
+<div>
   <% if @user == current_user %>
     <p><%= edit_and_destroy_buttons(@user) %></p>
   <% end %>

@@ -5,7 +5,6 @@ class BreweriesController < ApplicationController
 
   # GET /breweries or /breweries.json
   def index
-
     @breweries = Brewery.all
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
@@ -72,6 +71,13 @@ class BreweriesController < ApplicationController
     new_status = brewery.active? ? "active" : "retired"
 
     redirect_to brewery, notice: "brewery activity status changed to #{new_status}"
+  end
+
+  def active
+    # simulate a delay in calculating the recommendation
+    sleep(2)
+    @active_breweries = Brewery.active
+    render partial: 'active_breweries', locals: { breweries: @active_breweries }
   end
 
   private
