@@ -1,7 +1,7 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: %i[show edit update destroy]
   before_action :ensure_that_signed_in, except: [:index, :show, :list]
-  before_action :expire_cache, only: %i[create update destroy toggle_activity]
+  # before_action :expire_cache, only: %i[create update destroy toggle_activity]
 
   # GET /breweries or /breweries.json
   def index
@@ -32,10 +32,13 @@ class BreweriesController < ApplicationController
 
     respond_to do |format|
       if @brewery.save
-        format.turbo_stream {
-          status = @brewery.active? ? "active" : "retired"
-          render turbo_stream: turbo_stream.append("#{status}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery })
-        }
+        status = @brewery.active? ? "active" : "retired"
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.append("#{status}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery }),
+            turbo_stream.replace("#{status}_count", partial: "list_headers", locals: { status: status, count: status == "active" ? Brewery.active.count : Brewery.retired.count })
+          ]
+        end
         format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully created." }
         format.json { render :show, status: :created, location: @brewery }
       else
@@ -61,15 +64,21 @@ class BreweriesController < ApplicationController
   # DELETE /breweries/1 or /breweries/1.json
   def destroy
     status = @brewery.active? ? "active" : "retired"
-    @breweries = status === "active" ? Brewery.active : Brewery.retired
+    @breweries = status == "active" ? Brewery.active : Brewery.retired
 
-    if @brewery.destroy
-      respond_to do |format|
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.update("#{status}", partial: "brewery_list", locals: { breweries: @breweries, status: status })
-        }
+    respond_to do |format|
+      if @brewery.destroy
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.remove("brewery_#{@brewery.id}"),
+            turbo_stream.replace("#{status}_count", partial: "list_headers", locals: { status: status, count: status == "active" ? Brewery.active.count : Brewery.retired.count })
+          ]
+        end
         format.html { redirect_to breweries_url, notice: "Brewery was successfully destroyed." }
         format.json { head :no_content }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @brewery.errors, status: :unprocessable_entity }
       end
     end
   end

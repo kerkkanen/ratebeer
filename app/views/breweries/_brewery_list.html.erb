@@ -1,5 +1,10 @@
 <%= turbo_frame_tag status do %>
   <div>
+    <% header = status == "active" ? "Active" : "Retired"%>
+    <h3><%= header %></h3>
+    <%= render "list_headers", status: status, count: status == "active" ? Brewery.active.count : Brewery.retired.count %>
+  </div>
+  <div>
     <table class="table table-striped">
       <thead>
       <th>Name</th>
