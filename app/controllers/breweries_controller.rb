@@ -60,11 +60,17 @@ class BreweriesController < ApplicationController
 
   # DELETE /breweries/1 or /breweries/1.json
   def destroy
-    @brewery.destroy
+    status = @brewery.active? ? "active" : "retired"
+    @breweries = status === "active" ? Brewery.active : Brewery.retired
 
-    respond_to do |format|
-      format.html { redirect_to breweries_url, notice: "Brewery was successfully destroyed." }
-      format.json { head :no_content }
+    if @brewery.destroy
+      respond_to do |format|
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.update("#{status}", partial: "brewery_list", locals: { breweries: @breweries, status: status })
+        }
+        format.html { redirect_to breweries_url, notice: "Brewery was successfully destroyed." }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -91,7 +97,7 @@ class BreweriesController < ApplicationController
     render partial: 'brewery_list', locals: { breweries: @breweries, status: status }
   end
 
-  private
+private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_brewery
