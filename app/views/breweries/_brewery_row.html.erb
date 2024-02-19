@@ -8,5 +8,5 @@
     <% else %>
       <td><span class="badge bg-secondary">retired</span></td>
     <% end %>
-    <td><%= link_to("X", brewery, data: {turbo_method: :delete }) %></td>
+    <td><%= link_to("X", brewery, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to remove brewery #{ brewery.name } and all beers associated with it?" }) %></td>
   </tr>
