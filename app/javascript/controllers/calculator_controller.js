@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus";
+import {Controller} from "@hotwired/stimulus";
 
 export default class extends Controller {
   static targets = ["amount", "abv", "price", "customAmount"];
@@ -7,6 +7,7 @@ export default class extends Controller {
   connect() {
 	console.log("Calculator controller connected.");
   }
+
   calculate(event) {
 	event.preventDefault();
 	let amount = this.amountTarget.value;
@@ -39,5 +40,17 @@ export default class extends Controller {
 	this.amountTarget.value = "0";
 	this.abvTarget.value = "0";
 	this.priceTarget.value = "0";
+  }
+
+  change(event) {
+	const customInput = document.getElementById("customInput")
+	if (event.target.value === "Custom") {
+	  customInput.innerHTML = `
+              <label>Custom amount</label>
+      			<input type="number" min="0" step="0.01" value="0.00" data-calculator-target="customAmount"/>
+      		  <label>liters</label>`
+	} else {
+	  customInput.innerHTML = ""
+	}
   }
 }
