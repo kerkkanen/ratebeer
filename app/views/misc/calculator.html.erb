@@ -4,11 +4,17 @@
   <form data-action="calculator#calculate">
     <div>
       <label>Amount</label>
-      <select type="number" required="true" data-calculator-target="amount">
+      <select type="number" data-calculator-target="amount">
         <%= @amounts.each do |a| %>
           <option><%= a %></option>
         <% end %>
+        <option>Custom</option>
       </select>
+    </div>
+    <div>
+      <label>Custom amount</label>
+      <input type="number" min="0" step="0.01" value="0.00" data-calculator-target="customAmount"/>
+      <label>liters</label>
     </div>
     <div>
       <label>Alcohol by volume (ABV)</label>

@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["amount", "abv", "price"];
+  static targets = ["amount", "abv", "price", "customAmount"];
   static values = { vat: Number };
 
   connect() {
@@ -9,7 +9,8 @@ export default class extends Controller {
   }
   calculate(event) {
 	event.preventDefault();
-	const amount = parseFloat(this.amountTarget.value);
+	let amount = this.amountTarget.value;
+	amount = amount === "Custom" ? parseFloat(this.customAmountTarget.value) : parseFloat(amount);
 	const abv = parseFloat(this.abvTarget.value);
 	const price = parseFloat(this.priceTarget.value);
 	// Amounts of alcohol tax per liter of pure alcohol for beers.
