@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :memberships
   resources :beer_clubs
   resources :beers
-  resources :ratings, only: [:index, :show, :new, :create, :destroy]
+  resources :ratings, only: [:index, :show, :new, :create ]
   resource :session, only: [:new, :create, :destroy]
   resources :places, only: [:index, :show]
   resources :messages, only: [:index, :new, :create]
@@ -30,5 +30,6 @@ Rails.application.routes.draw do
   post 'places', to: 'places#search'
   get 'beerlist', to: 'beers#list'
   get 'brewerylist', to: 'breweries#list'
-
+  delete 'ratings', to: 'ratings#destroy'
+  get 'calculator', to: 'misc#calculator'
 end

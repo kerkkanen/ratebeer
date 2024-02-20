@@ -42,6 +42,9 @@
             <li class="nav-item">
               <%= link_to 'chat', messages_path , { class: "nav-link" } %>
             </li>
+            <li class="nav-item">
+              <%= link_to 'tax misc', calculator_path, { class: "nav-link" } %>
+            </li>
 
             <% if current_user %>            
             <li class="nav-item dropdown">
@@ -58,6 +61,9 @@
                   </li>
                   <li class="nav-item">
                     <%= link_to "Sign out", signout_path, class: "dropdown-item", data: {turbo_method: :delete} %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to 'styles', styles_path, { class: "nav-link" } %>
                   </li>
                 </ul>
             </li>

@@ -37,22 +37,8 @@
   </ul>
 <% end %>
 
-<p><strong>Ratings:</strong></p>
-
-<ul>
-  <%= turbo_frame_tag "ratings" do %>
-    <% @user.ratings.each do |rating| %>
-      <li><%= link_to rating, rating, data: { turbo_frame: "rating_details" } %>
-        <% if @user == current_user %>
-          <%= button_to 'delete', rating, method: :delete, form: { style: 'display:inline-block;', data: { 'turbo-confirm': 'Are you sure?' } } %>
-        <% end %>
-      </li>
-    <% end %>
-  <% end %>
-
-  <%= turbo_frame_tag "rating_details" do %>
-  <% end %>
-</ul>
+<h4>Ratings</h4>
+<%= render partial: 'ratings' %>
 
 <div>
   <%= turbo_frame_tag "beer_recommendation_tag", src: recommendation_user_path do %>
