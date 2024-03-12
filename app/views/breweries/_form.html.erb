@@ -1,9 +1,8 @@
 <div data-controller="form">
-  <%= form_with(model: brewery) do |form| %>
+  <%= form_with(model: brewery, data: { action: "turbo:submit-end->form#emptyFields" }) do |form| %>
     <% if brewery.errors.any? %>
       <div style="color: red">
         <h2><%= pluralize(brewery.errors.count, "error") %> prohibited this brewery from being saved:</h2>
-
         <ul>
           <% brewery.errors.each do |error| %>
             <li><%= error.full_message %></li>
