@@ -1,34 +1,41 @@
-<%= form_with(model: brewery) do |form| %>
-  <% if brewery.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(brewery.errors.count, "error") %> prohibited this brewery from being saved:</h2>
+<div data-controller="form">
+  <%= form_with(model: brewery) do |form| %>
+    <% if brewery.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(brewery.errors.count, "error") %> prohibited this brewery from being saved:</h2>
 
-      <ul>
-        <% brewery.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% brewery.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="form-group">
+      <%= form.label :name, "Name:", class: "col-md-4 control-label" %>
+      <div class="col-md-8">
+        <%= form.text_field :name, class: "form-control", data: { "form-target": "input" } %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= form.label :year, "Year", class: "col-md-4 control-label" %>
+      <div class="col-md-8">
+        <%= form.number_field :year, class: "form-control", data: { "form-target": "input" } %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= form.label :year, "Active", class: "col-md-4 control-label" %>
+      <div class="col-md-8">
+        <%= form.check_box :active, data: { "form-target": "checkbox" } %>
+      </div>
+    </div>
+    <br>
+    <div style="display: flex; gap: 6px">
+      <%= form.submit "Create brewery", class: "btn btn-default btn-primary" %>
+      <button type="button" class="btn btn-default btn-danger" data-action="form#emptyFields">
+        Empty fields
+      </button>
     </div>
   <% end %>
+</div>
 
-  <div class="form-group">
-    <%= form.label :name, "Name:", class: "col-md-4 control-label" %>
-    <div class="col-md-8">
-      <%= form.text_field :name, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= form.label :year, "Year", class: "col-md-4 control-label" %>
-    <div class="col-md-8">
-      <%= form.number_field :year, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= form.label :year, "Active", class: "col-md-4 control-label" %>
-    <div class="col-md-8">
-      <%= form.check_box :active %>
-    </div>
-  </div>
-  <br>
-  <%= form.submit "Create brewery", class: "btn btn-default btn-primary" %>
-<% end %>
