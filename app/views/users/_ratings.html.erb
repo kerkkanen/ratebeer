@@ -2,14 +2,19 @@
   <% @user.ratings.each do |rating| %>
     <div class="rating">
       <% if @user == current_user %>
-        <input type="checkbox" name="ratings[]" value="<%= rating.id %>" />
+        <input type="checkbox" name="ratings[]" data-ratings-target="rating" value="<%= rating.id %>"/>
       <% end %>
       <span>
-        <%= link_to "#{rating.score} #{rating.beer.name}", rating, data: { turbo_frame: "rating_details" }  %>
+        <%= link_to "#{rating.score} #{rating.beer.name}", rating, data: { turbo_frame: "rating_details" } %>
       </span>
     </div>
   <% end %>
   <% if @user == current_user %>
+    <div>
+      <span>select all</span>
+      <input type="checkbox" name="all_ratings" data-action="ratings#toggleAll"/>
+    </div>
+    </br>
     <button data-action="click->ratings#destroy">Delete selected</button>
   <% end %>
 </div>

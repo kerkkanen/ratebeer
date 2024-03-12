@@ -40,4 +40,13 @@ export default class extends Controller {
 	  console.log(error);
 	});
   }
+
+  toggleAll(event) {
+	const isChecked = event.target.checked;
+	const checkboxes = document.querySelectorAll('input[name="ratings[]"]');
+	checkboxes.forEach((checkbox) => {
+		checkbox.checked ? checkbox.checked = false : checkbox.checked = true;
+	  }
+	);
+  }
 };
