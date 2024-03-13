@@ -22,9 +22,9 @@ class BeerClubsController < ApplicationController
     @applicants = Membership.applicant.where(beer_club_id: params[:id], confirmed: false)
     @membership = Membership.new
     @membership.beer_club = @beer_club
-    if current_user
-      @user_membership = Membership.where(user_id: current_user.id, beer_club_id: @beer_club.id)[0]
-    end
+    return unless current_user
+
+    @user_membership = Membership.where(user_id: current_user.id, beer_club_id: @beer_club.id)[0]
   end
 
   # GET /beer_clubs/new

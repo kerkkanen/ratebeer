@@ -18,9 +18,9 @@ class Brewery < ApplicationRecord
   end
 
   def year_not_greater_than_this_year
-    unless year.nil?
-      errors.add(:year, "can't be greater than current year") if year > Time.now.year
-    end
+    return if year.nil?
+
+    year > Time.now.year ? errors.add(:year, "can't be greater than current year") : ""
   end
 
   after_create_commit do
@@ -29,7 +29,7 @@ class Brewery < ApplicationRecord
     status = active ? "active" : "retired"
 
     broadcast_append_to "breweries_index", partial: "breweries/brewery_row", target: target_id
-    broadcast_replace_to "breweries_index", partial: "breweries/list_headers", target: "#{status}_count", locals: { status: status, count: count }
+    broadcast_replace_to "breweries_index", partial: "breweries/list_headers", target: "#{status}_count", locals: { status:, count: }
   end
 
   after_destroy_commit do
@@ -37,6 +37,6 @@ class Brewery < ApplicationRecord
     count = active ? Brewery.active.count : Brewery.retired.count
 
     broadcast_remove_to "breweries_index", target: "brewery_#{id}"
-    broadcast_replace_to "breweries_index", partial: "breweries/list_headers", target: "#{status}_count", locals: { status: status, count: count }
+    broadcast_replace_to "breweries_index", partial: "breweries/list_headers", target: "#{status}_count", locals: { status:, count: }
   end
 end

@@ -38,13 +38,13 @@ class BreweriesController < ApplicationController
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.append("#{status}_brewery_rows", partial: "brewery_row", locals: { brewery: @brewery }),
-            turbo_stream.replace("#{status}_count", partial: "list_headers", locals: { status: status, count: status == "active" ? Brewery.active.count : Brewery.retired.count })
+            turbo_stream.replace("#{status}_count", partial: "list_headers", locals: { status:, count: status == "active" ? Brewery.active.count : Brewery.retired.count })
           ]
         end
         format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully created." }
         format.json { render :show, status: :created, location: @brewery }
       else
-        format.html { render :new, status: :unprocessable_entity, locals: { brewery_listing: @brewery_listing} }
+        format.html { render :new, status: :unprocessable_entity, locals: { brewery_listing: } }
         format.json { render json: @brewery.errors, status: :unprocessable_entity }
       end
     end
@@ -73,7 +73,7 @@ class BreweriesController < ApplicationController
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.remove("brewery_#{@brewery.id}"),
-            turbo_stream.replace("#{status}_count", partial: "list_headers", locals: { status: status, count: status == "active" ? Brewery.active.count : Brewery.retired.count })
+            turbo_stream.replace("#{status}_count", partial: "list_headers", locals: { status:, count: status == "active" ? Brewery.active.count : Brewery.retired.count })
           ]
         end
         format.html { redirect_to breweries_url, notice: "Brewery was successfully destroyed." }
@@ -99,16 +99,16 @@ class BreweriesController < ApplicationController
     sleep(2)
     status = "active"
     @breweries = Brewery.active
-    render partial: 'brewery_list', locals: { breweries: @breweries, status: status }
+    render partial: 'brewery_list', locals: { breweries: @breweries, status: }
   end
 
   def retired
     status = "retired"
     @breweries = Brewery.retired
-    render partial: 'brewery_list', locals: { breweries: @breweries, status: status }
+    render partial: 'brewery_list', locals: { breweries: @breweries, status: }
   end
 
-private
+  private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_brewery
@@ -126,6 +126,6 @@ private
 
   def brewery_listing
     breweries_api = BreweriesApi.new
-    breweries_api.get_breweries
+    breweries_api.list_breweries
   end
 end

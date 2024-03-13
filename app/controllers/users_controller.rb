@@ -9,12 +9,12 @@ class UsersController < ApplicationController
   # GET /users/1 or /users/1.json
   def show
     @ratings = @user.ratings
-    memberships = Membership.where(user_id: params[:id], confirmed: true).map{ |m| m.beer_club.id }
-    @clubs = memberships.each.map{ |m| BeerClub.where(id: m) }
-    if current_user
-      applied = Membership.where(user_id: current_user.id, confirmed: false).map{ |m| m.beer_club.id }
-      @applications = applied.map{ |m| BeerClub.where id: m }
-    end
+    memberships = Membership.where(user_id: params[:id], confirmed: true).map { |m| m.beer_club.id }
+    @clubs = memberships.each.map { |m| BeerClub.where(id: m) }
+    return unless current_user
+
+    applied = Membership.where(user_id: current_user.id, confirmed: false).map { |m| m.beer_club.id }
+    @applications = applied.map { |m| BeerClub.where id: m }
   end
 
   # GET /users/new
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-    
+
     respond_to do |format|
       if @user.save
         format.html { redirect_to user_url(@user), notice: "User was successfully created." }

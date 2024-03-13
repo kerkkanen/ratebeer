@@ -1,5 +1,4 @@
 class RatingsController < ApplicationController
-
   PAGE_SIZE = 3
 
   def index
@@ -28,9 +27,9 @@ class RatingsController < ApplicationController
 
   def show
     @rating = Rating.includes(beer: :brewery).find(params[:id])
-    if turbo_frame_request?
-      render partial: 'details', locals: { rating: @rating, brewery: @rating.beer.brewery }
-    end
+    return unless turbo_frame_request?
+
+    render partial: 'details', locals: { rating: @rating, brewery: @rating.beer.brewery }
   end
 
   def create
@@ -48,7 +47,7 @@ class RatingsController < ApplicationController
   def destroy
     destroy_ids = request.body.string.split(',')
     destroy_ids.each do |id|
-      rating = Rating.find_by(id: id)
+      rating = Rating.find_by(id:)
       rating.destroy if rating && current_user == rating.user
       # Rescue in case one of the rating IDs is invalid so we can continue deleting the rest
     rescue StandardError => e
