@@ -20,6 +20,7 @@ class BreweriesController < ApplicationController
   # GET /breweries/new
   def new
     @brewery = Brewery.new
+    @brewery_listing = brewery_listing
   end
 
   # GET /breweries/1/edit
@@ -29,6 +30,7 @@ class BreweriesController < ApplicationController
   # POST /breweries or /breweries.json
   def create
     @brewery = Brewery.new(brewery_params)
+    @brewery_listing = brewery_listing
 
     respond_to do |format|
       if @brewery.save
@@ -42,7 +44,7 @@ class BreweriesController < ApplicationController
         format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully created." }
         format.json { render :show, status: :created, location: @brewery }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity, locals: { brewery_listing: @brewery_listing} }
         format.json { render json: @brewery.errors, status: :unprocessable_entity }
       end
     end
@@ -120,5 +122,10 @@ private
 
   def expire_cache
     expire_fragment('brewerylist')
+  end
+
+  def brewery_listing
+    breweries_api = BreweriesApi.new
+    breweries_api.get_breweries
   end
 end
